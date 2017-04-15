@@ -33,7 +33,7 @@ def eulers():
     u=.01
     o=5
     A=.1
-    phi=-8
+    phi=6
     c=0
     cd=np.sin(-phi)
     c2=1
@@ -108,7 +108,7 @@ def eulers():
         thresh=threshinit
 
 eulers()
-plt.plot(tarray,alertarray,'purple',label='hc')
+#plt.plot(tarray,alertarray,'purple',label='hc')
 plt.plot(tarray,alertdarray,'green',label='driven hc')
 #plt.plot(tarray,wakesleeparray,'r',label='wakesleep')
 #plt.plot(tarray,wakesleepdarray,'b',label='wakesleepd')
@@ -119,5 +119,5 @@ plt.plot(tarray,alertdarray,'green',label='driven hc')
 plt.legend(loc='best')
 plt.xlabel('t')
 plt.grid()
-plt.savefig("test.svg")
+plt.savefig("driven+6.svg")
 #call function
