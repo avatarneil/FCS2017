@@ -3,31 +3,24 @@ from scipy.optimize import minimize
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 
-init = [5,5]
+init = [-1,1]
 init2 = 5
-tlist = np.linspace(0,24,100)
+tlist = np.linspace(0,120,1200)
 mu = .5
-omega=.001
 tw=1
-rhw=1/38
+rhw=(1/38)
 rsw=1/2.14
-uh=0.9896
+uh=0.9896/24
 sleepstatus = 1
 hac=0.098
 uc=.1503
 a=6.2*10**-6
+omega=(2*np.pi)/24
 
 def objective(init,t,mu): #vanderpal
     x,y=init
-    dxdt = mu*(x-(1/3)*x**3-y)
-    dydt = (1/mu)*x
-    dadt = [dxdt,dydt]
-    return dadt
-
-def objectiveDriven(init,t,mu): #vanderpal
-    x,y=init
-    dxdt = mu*(x-(1/3)*x**3-y)
-    dydt = (1/mu)*(x-np.sin(omega*t))
+    dxdt = mu*(x*omega**2-(1/3)*x**3-y)
+    dydt = (1/mu)*x*omega**2
     dadt = [dxdt,dydt]
     return dadt
 
