@@ -3,12 +3,12 @@ from scipy.optimize import minimize
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 
-init = [-1,1]
-init2 = 5
-tlist = np.linspace(0,120,1200)
+init = [-5,-1]
+initH = 15
+
+tlist = np.linspace(0,100,101)
 mu = .5
-tw=1
-rhw=(1/38)
+rhw=6.64*(10**-5)
 rsw=1/2.14
 uh=0.9896/24
 sleepstatus = 1
@@ -16,6 +16,8 @@ hac=0.098
 uc=.1503
 a=6.2*10**-6
 omega=(2*np.pi)/24
+t0=18.24           
+kappa=5
 
 def objective(init,t,mu): #vanderpal
     x,y=init
@@ -24,29 +26,32 @@ def objective(init,t,mu): #vanderpal
     dadt = [dxdt,dydt]
     return dadt
 
-def homSleep(init2,t,uh,rsw):
-     h=init2
+def homSleep(initH,t,uh,rsw):
+     h=initH
      tindex=0
      dif = 100000000000
      ttest = 0
      for i in range(len(tlist)):
          ttest = abs(tlist[i]-t)
          if (ttest<dif):
+             
              dif=ttest
              tindex=i
      dhdt = rsw*(1-.1*solObj[:,0][tindex])*(uh-h)
      return dhdt
     
-def homWake(init2,t,tw,uh,rhw):
-    h=init2
+def homWake(initH,t,t0,uh,rhw):
+    h=initH
     #dhdt = -2*tw*((rhw)**2)*(uh-h)
-    dhdt=-2*tw*(rhw**2)*(h-uh)
+    dhdt=((t**2)/(t+t0))*rhw*(h-uc)
     return dhdt
-def testfunc(init2,t,k):
-    tfunc = init2
-    dtfuncdt=k*tfunc
-    return dtfuncdt    
-def circadian(init2,t,uc,a,hac):
+  
+def testfunc(initB,t,kappa):
+    alphata=initB
+    didi = kappa*alphata
+    return didi
+    
+def circadian(initC,t,uc,a,hac):
      #ifasleep, use sleep version of h, if awake use awake version
      tindex=0
      dif = 100000000000
@@ -80,26 +85,26 @@ def cogt(t):
 
 
 solObj = odeint(objective,init,tlist,args=(mu,))
-solTestFunc=odeint(testfunc,init2,tlist,args=(1.5,))
-solObjDriven = odeint(objectiveDriven,init,tlist,args=(mu,))
-solhomSleep = odeint(homSleep,init2,tlist,args=(uh,rsw,))
-solhomWake = odeint(homWake,init2,tlist,args=(uh,tw,rhw,))
+solTestFunc=odeint(testfunc,initH,tlist,args=(kappa,))
+#solObjDriven = odeint(objectiveDriven,init,tlist,args=(mu,))
+solhomSleep = odeint(homSleep,initH,tlist,args=(uh,rsw,))
+solhomWake = odeint(homWake,initH,tlist,args=(uh,t0,rhw,))
 
 circarray=[]
 for i in range(len(tlist)):
-    circarray.append(circadian(init2,tlist[i],uc,a,hac))
+    circarray.append(circadian(initH,tlist[i],uc,a,hac))
     
 #solCircadian = odeint(circadian,init2,tlist,args=(uc,a,hac,))
 #plt.plot(tlist, solObj[:, 0], '#008080', label='undriven')
 #plt.plot(tlist, solhomSleep[:,0], 'r',label='solhomsleep')
 #plt.plot(tlist, solObjDriven[:,0], 'r',label='driven')
 #plt.plot(tlist, solhomWake[:,0], 'g',label='solhomWake')
-#plt.plot(tlist, solTestFunc)
-plt.plot(tlist, circarray,'b', label='solcircadian')
-#plt.plot(tlist, solhomWake[:,0]+solCircadian[:,0], label='sum')
+#plt.plot(tlist, solTestFunc[:,0])
+#plt.plot(tlist, circarray,'b', label='solcircadian')
+plt.plot(tlist, solhomWake[:,0]+circarray, label='prod')
 #plt.plot(tlist,circarray)
-#plt.xlim(-1,20)
-#plt.ylim(-5,15)
+plt.xlim(0,54)
+plt.ylim(-5,15)
 plt.legend(loc='best')
 plt.xlabel('t')
 plt.grid()
