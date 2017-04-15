@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Apr 14 09:18:16 2017
-
-@author: avata
-"""
-
 import numpy as np
 from scipy.optimize import minimize
 from scipy.integrate import odeint
