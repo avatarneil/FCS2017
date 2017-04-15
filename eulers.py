@@ -4,7 +4,7 @@ carray = []
 c2array = []
 tarray = []
 harray = []
-sumhcarray = []
+alertarray = []
 
 def eulers():
     dt = 0.1 # hr
@@ -25,17 +25,15 @@ def eulers():
     u=.01
     
     while t<=120:
+        thresh=thresh+0.7*np.random.randn()
         dcdt = mu*(c*omega**2-(1/3)*c**3-c2)
         dc2dt = ((1/mu)*c)*omega**2
         c=c+dcdt*dt
         c2=c2+dc2dt*dt
-        c=c*np.e**(-h*u)
         if (h-c>=thresh and sleepstatus==1):
             sleepstatus=0
-            print(t,sleepstatus)
         elif(np.abs(h-c)<.1 and sleepstatus==0):
             sleepstatus=1
-            print(t,sleepstatus)
         
         if(sleepstatus==1):
             dhdt=(-h/xw)+(hasy/xw)
@@ -48,12 +46,12 @@ def eulers():
         carray.append(c)
         c2array.append(c2)
         tarray.append(t)
-        sumhcarray.append(h+c)
+        alertarray.append(h-c)
         t=t+dt
         i=i+1
-        
+        thresh=3
 eulers()
-#plt.plot(tarray,sumhcarray,'purple',label='hc')
+#plt.plot(tarray,alertcarray,'purple',label='hc')
 plt.plot(tarray,carray,'r',label='C')
 plt.plot(tarray,harray,'g',label='h')
 plt.legend(loc='best')
