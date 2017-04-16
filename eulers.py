@@ -109,8 +109,8 @@ def eulers():
 
 eulers()
 #plt.plot(tarray,alertarray,'purple',label='hc')
-plt.plot(tarray,alertdarray,'green',label='driven hc')
-#plt.plot(tarray,wakesleeparray,'r',label='wakesleep')
+#plt.plot(tarray,alertdarray,'green',label='driven hc')
+plt.plot(tarray,wakesleeparray,'r',label='wakesleep')
 #plt.plot(tarray,wakesleepdarray,'b',label='wakesleepd')
 #plt.plot(tarray,carray,'r',label='C')
 #plt.plot(tarray,cdarray)
@@ -119,5 +119,5 @@ plt.plot(tarray,alertdarray,'green',label='driven hc')
 plt.legend(loc='best')
 plt.xlabel('t')
 plt.grid()
-plt.savefig("driven+6.svg")
+plt.savefig("wakesleep+6.svg")
 #call function
