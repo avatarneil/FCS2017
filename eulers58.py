@@ -8,13 +8,15 @@ wakesleeparray=[]
 cogtarray = []
 CCarray = []
 warray = []
-
+intensityarray=[]
+barray=[]
 
 def intensity(z):
-    if (z>=0 and z<=8):
-        return .5
+    if (z%2==0):
+        return 5000
     else: 
-        return 1500
+        return 0
+        
 
 def eulers():
     dt = .01
@@ -28,19 +30,19 @@ def eulers():
     tx = 24.2
     k = .55
     beta = .013
-    G = 19.875
+    G = 19.875 
     alpha0 = .16
     p=.6
     xmin = 8
     
     #H constants
     rhsl = (1/2.14)
-    uh = .9896
-    rhw = (1/32)
+    uh = .95
+    rhw = (1/38)
     uc = .1503
     
     #CC constants
-    a = 6.2*10**-6
+    a = 9.27*10**-6
     hac = .098
     
     #W constants
@@ -52,7 +54,7 @@ def eulers():
     c = -.17
     c2 = -1.22
     n = .5
-    h = .5
+    h = .85
     
     
     
@@ -61,10 +63,13 @@ def eulers():
         #C euler function
         
         #sleepwakecycle
-        if (t>=0 and t<=8):
+        if ((t%24)>=0 and (t%24)<8):
             sleepstatus = 0
-        else:
+        elif ((t%24-8) <=0.01):
             sleepstatus = 1
+            twake=t
+        else:
+            sleepstatus=sleepstatus
         
         #alpha&n -- Light stuff
         I = intensity(t)
@@ -72,11 +77,11 @@ def eulers():
         dndt = 60*(alpha*(1-n)-beta*n)
         
         #b -- Driving function caused by light
-        b = G * (1-n) * alpha * (1-.4*c) * (1-.4*c2)
-        
+        #b = G * (1-n) * alpha * (1-.4*c) * (1-.4*c2)
+        b=(1-c/3) * .018 * I**(1/3)
         #C stuff
         dcdt = (np.pi/12) * (c2 + mu*(c/3+(4*c**3)/3-(256*c**7)/105)+ b)
-        dc2dt = (np.pi/12) * (q*b*c2 - c*((24/tx*(.99729))**2 + k*b))
+        dc2dt = (np.pi/12) * (q*b*c2 - c*((24/(tx*.99729))**2 + k*b))
         
         #H stuff
         tw = t-twake
@@ -90,7 +95,7 @@ def eulers():
         CC = Ac* (.91 * c-.29*c2)
         
         #Cogt stuff -- Sum of the other things
-        cogt = CC + h + w
+        cogt = CC + h 
         
         #append arrays
         harray.append(h)    
@@ -100,16 +105,16 @@ def eulers():
         cogtarray.append(cogt)
         CCarray.append(CC)
         warray.append(w)
+        intensityarray.append(intensity(t))
+        barray.append(b)
         
         #W stuff (is basically updates)
         if (sleepstatus == 0):
-            print(t,'Asleep, updating w')
             if (h+CC >= np.abs(w0)):
                 w = w0
             else:
                 w = -(h+CC)
         else:
-            print(t, 'Awake, updating w')
             dwdt = -rw * w
             w = w + dwdt*dt #wupdate
         
@@ -122,8 +127,7 @@ def eulers():
         
 eulers()    
 #plot stuff
-plt.plot(tarray,warray,'blue',label='c')
-
+plt.plot(tarray,cogtarray,'blue')
 plt.legend(loc='best')
 plt.xlabel('t')
 plt.grid()
