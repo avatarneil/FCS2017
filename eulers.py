@@ -38,7 +38,7 @@ def eulers():
     cd=np.sin(-phi)
     c2=1
     c2d=np.cos(-phi)
-    
+
     sleepfreedom=0
     while t<=72:
         thresh=thresh+np.random.randn()
@@ -52,6 +52,9 @@ def eulers():
         cd = cd +dcddt*dt
         c2=c2+dc2dt*dt
         c2d = c2d+dc2ddt*dt
+        
+        
+        
         #enable/disable sleep
         if ((0<=t and t<=8)) or ((24<=t and t<=32)) or (48<=t and t<=56):
             sleepfreedom=0
