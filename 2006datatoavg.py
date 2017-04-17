@@ -38,7 +38,9 @@ while (i<data2006nonull.size):
         j+=1
     j=19 + scaler
     while (j <= 22+scaler):
-        if (data2006nonullsplit[i][j] == '-' or data2006nonullsplit[i][j]=='1' or data2006nonullsplit[i][j]=='2' or data2006nonullsplit[i][j]=='3' or data2006nonullsplit[i][j]=='4' or data2006nonullsplit[i][j]=='5' or data2006nonullsplit[i][j]=='6' or data2006nonullsplit[i][j]=='7' or data2006nonullsplit[i][j]=='8' or data2006nonullsplit[i][j]=='9'):
+        if (j==19+scaler and data2006nonullsplit[i][j] == '-'):
+            temp=temp+data2006nonullsplit[i][j]
+        elif (data2006nonullsplit[i][j]=='0'or data2006nonullsplit[i][j]=='1' or data2006nonullsplit[i][j]=='2' or data2006nonullsplit[i][j]=='3' or data2006nonullsplit[i][j]=='4' or data2006nonullsplit[i][j]=='5' or data2006nonullsplit[i][j]=='6' or data2006nonullsplit[i][j]=='7' or data2006nonullsplit[i][j]=='8' or data2006nonullsplit[i][j]=='9'):
             temp = temp + data2006nonullsplit[i][j]
         j+=1
     k=0
@@ -50,12 +52,15 @@ while (i<data2006nonull.size):
         if (IDlist[k-1] == ID):
             idchecker=False
             idindex=k-1
-            if (temp[0] == '-'):
-                temp = temp[1:]
-                templist[idindex] = [float(templist[idindex][0]) + (-1*float(temp))]   
+            if (temp[0] == '-' and templist[idindex][0] == '-'):
+                templist[idindex] = [-1*int(templist[idindex][1:]) + (-1*int(temp[1:]))]
+            elif (temp[0] == '-'):
+                templist[idindex] = [int(templist[idindex][0]) + (-1*int(temp[1:]))]
+            elif(templist[idindex][0] == '-'):
+                templist[idindex] = [-1*int(templist[idindex][1:]) + int(temp)]
             else:
-                print(temp,templist[idindex],idindex)
-                templist[idindex] = [float(templist[idindex][0]) + float(temp)]
+                print(temp,templist[idindex][0],i,ID)
+                templist[idindex] = [int(templist[idindex][0]) + int(temp)]
         k+=1
     k=0
     if (idchecker==True):
