@@ -1,37 +1,52 @@
-#from GeoBases import GeoBase
-#point = (40,-75)
-#geo_a = GeoBase(data='airports',verbose=False)
-#print(list(geo_a.findClosestFromPoint(point)))
-#print()
-#geo_a.visualize()
-
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
-"""
-Drawing some lines between airports on a map.
-"""
-
 from GeoBases import GeoBase
+import plotly.plotly as py
+import pandas as pd
 
-def main():
-    """Main function.
-    """
-    g = GeoBase('ori_por', verbose=False)
+import plotly.plotly as py
 
-    # List of markers displayed
-    markers = ['ORY', 'NCE', 'MUC', 'MAD', 'BES']
+nyc_london = [ dict(
+    type = 'scattergeo',
+    lat = [ 39.0392, 41.8781],
+    lon = [ 125.7625, -87.6298],
+    mode = 'lines',
+    line = dict(
+        width = 1,
+        color = 'purple',
+    ),
+) ]
+    
+layout = dict(
+        title = 'Pyongyang to Chicago',
+        showlegend = False,         
+        geo = dict(
+            resolution = 100,
+            showland = True,
+            showlakes = True,
+            landcolor = 'rgb(204, 204, 204)',
+            countrycolor = 'rgb(204, 204, 204)',
+            lakecolor = 'rgb(255, 255, 255)',
+            projection = dict( type="equirectangular" ),
+            coastlinewidth = 2,
+            lataxis = dict(
+                range = [ -100, 100 ],
+                showgrid = False,
+                tickmode = "linear",
+                dtick = 20
+            ),
+            lonaxis = dict(
+                range = [-100, 100],
+                showgrid = False,
+                tickmode = "linear",
+                dtick = 20
+            ),
+        )
+    )
 
-    # List of lines displayed
-    lines = [
-        ('ORY', 'NCE'),
-        ('ORY', 'MAD'),
-        ('ORY', 'MUC'),
-        ('ORY', 'TLS')  # note that TLS has no marker
-    ]
-
-    g.visualize(output='the_gist',icon_label='name',add_lines=lines)       # do not draw lines from duplicates analysis
+fig = dict( data=nyc_london, layout=layout )
+py.iplot( fig, validate=False, filename='d3-great-circle' )
 
 
-
-main()
+point = (40,-75)
+geo_a = GeoBase(data='airports',verbose=False)
+print(list(geo_a.findClosestFromPoint(point)))
+print()
