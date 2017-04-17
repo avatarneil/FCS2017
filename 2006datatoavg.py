@@ -49,27 +49,42 @@ while (i<data2006nonull.size):
             IDlist.append(ID)
             idindex=0
             templist.append(temp)
+            IDcount.append(1)
         if (IDlist[k-1] == ID):
             idchecker=False
             idindex=k-1
-            if (temp[0] == '-' and templist[idindex][0] == '-'):
+            print(templist[idindex])
+            print(templist[idindex],str(templist[idindex][0])[0])
+            if (temp[0] == '-' and str(templist[idindex][0])[0] == '-'):
                 templist[idindex] = [-1*int(templist[idindex][1:]) + (-1*int(temp[1:]))]
+                IDcount[idindex] = IDcount[idindex] + 1
             elif (temp[0] == '-'):
                 templist[idindex] = [int(templist[idindex][0]) + (-1*int(temp[1:]))]
-            elif(templist[idindex][0] == '-'):
-                templist[idindex] = [-1*int(templist[idindex][1:]) + int(temp)]
+                IDcount[idindex] = IDcount[idindex] + 1
+            elif(str(templist[idindex][0])[0] == '-'):
+                print(str(templist[idindex][0])[0])
+                print(str(templist[idindex][0]))
+                print(str(templist[idindex][0])[1:])
+                templist[idindex] = [-1*int(str(templist[idindex][0])[1:]) + int(temp)]
+                IDcount[idindex] = IDcount[idindex] + 1
             else:
-                print(temp,templist[idindex][0],i,ID)
                 templist[idindex] = [int(templist[idindex][0]) + int(temp)]
+                IDcount[idindex] = IDcount[idindex] + 1
         k+=1
     k=0
     if (idchecker==True):
         IDlist.append(ID)
         idindex=len(IDlist)-1
         templist.append(temp)
+        IDcount.append(1)
     temp = ''
     j=0 + scaler
     ID = ''
     i+=1
 i=0
-print(IDlist)
+#while i<len(templist):
+#    templist[i] = templist[i][0] templist[i]
+    
+    
+    
+    
