@@ -11,8 +11,8 @@ flightpaths = []
 for i in range ( len (flightdata)):
     flightpaths.append(dict(
     type = 'scattergeo',
-    lat = flightdata[i][0][i],
-    lon = flightdata[i][0][i],
+    lat = flightdata[i][0],
+    lon = flightdata[i][1],
     mode = 'lines',
     line = dict(
         width = 1,
