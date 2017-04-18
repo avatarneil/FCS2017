@@ -23,12 +23,12 @@ tzlist = []
 i=-80
 j=-180
 
-shitintheocean = 0
+stuffintheocean = 0
 
 while(i<84):
     while (j<180):
         if (longToTzName(i,j) == None):
-            shitintheocean+=1
+            stuffintheocean+=1
         else:
             latlist.append(i)
             longlist.append(j)
