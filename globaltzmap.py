@@ -111,4 +111,4 @@ layout = dict(
         )
     )
 
-plotly.offline.plot({"data": data, "layout": layout},validate=False)
+plotly.offline.plot({"data": data, "layout": layout},validate=False,image='svg')
