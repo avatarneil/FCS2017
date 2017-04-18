@@ -5,8 +5,9 @@ from plotly.offline.offline import _plot_html
 from plotly.graph_objs import *
 import numpy as np
 import random
+import plotly
 init_notebook_mode()
-conference=[24.958202,46.700779]
+conference=[58.64864865,52.32972973]
 #conference=[47.0925,8.305]
 #[[latitude,latitude2],[longitude,longitude2],]
 flightdata1 = [[[36.5883,conference[0]],[-121.8491,conference[1]]],[[52.1427,conference[0]],[6.1961,conference[1]]],[[-37.6690,conference[0]],[144.8410,conference[1]]],[[31.2304,conference[0]],[121.4737,conference[1]]],[[22.39,conference[0]],[114.1095,conference[1]]],[[55.7558,conference[0]],[37.6173,conference[1]]]]

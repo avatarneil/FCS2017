@@ -6,6 +6,7 @@ from scipy.optimize import minimize_scalar
 from scipy.optimize import fsolve
 from scipy.integrate import odeint
 
+
 csvdata = list(csv.reader(open("UTFData.csv")))
 csvdata = np.array(csvdata)
 dataset1=[[36.6,-121.89846],[52.1427,6.1961],[-37.8136,144.9631],[31.2304,121.4737],[22.39,114.1095],[55.7558,37.6173]]
