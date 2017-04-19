@@ -7,7 +7,7 @@ import numpy as np
 import random
 import plotly
 init_notebook_mode()
-conference=[53.62162162,20.27027027]
+conference=[55.96756757,35.89189189]
 #conference=[47.0925,8.305]
 #[[latitude,latitude2],[longitude,longitude2],]
 flightdata1 = [[[36.5883,conference[0]],[-121.8491,conference[1]]],[[52.1427,conference[0]],[6.1961,conference[1]]],[[-37.6690,conference[0]],[144.8410,conference[1]]],[[31.2304,conference[0]],[121.4737,conference[1]]],[[22.39,conference[0]],[114.1095,conference[1]]],[[55.7558,conference[0]],[37.6173,conference[1]]]]
@@ -23,12 +23,12 @@ i=0
 
 
 
-for i in range ( len (flightdata2)):
+for i in range ( len (flightdata1)):
     flightpaths.append(dict(
     type = 'scattergeo',
-    lat = flightdata2[i][0],
-    lon = flightdata2[i][1],
-    name = 'Flight -- ' + flightnames2[i],
+    lat = flightdata1[i][0],
+    lon = flightdata1[i][1],
+    name = 'Flight -- ' + flightnames1[i],
     mode = 'lines',
     line = dict(
         width = 3,
@@ -39,7 +39,7 @@ i=0
 print(flightpaths)
 
 layout = dict(
-        title = 'MAPS',
+        title = 'Scenario 1 Flight Results',
         showlegend = True,         
         geo = dict(
             resolution = 100,

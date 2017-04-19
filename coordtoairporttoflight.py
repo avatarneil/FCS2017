@@ -12,7 +12,7 @@ csvdata = list(csv.reader(open("UTFData.csv",encoding='utf-8')))
 csvdata = np.array(csvdata)
 dataset1=[[36.6,-121.89846],[52.1427,6.1961],[-37.8136,144.9631],[31.2304,121.4737],[22.39,114.1095],[55.7558,37.6173]]
 dataset2=[[42.3601,-71.0589],[42.3601,-71.0589],[1.3521,103.8198],[39.91,160.3636],[22.3964,114.1095],[22.3964,114.1095],[55.7558,37.6173],[52.0907,5.1412],[52.2297,21.0122],[55.6761,12.5683],[-37.8136,144.9631]]
-latlongarray=dataset1
+latlongarray=dataset2
 #conference=[59.9343,30.3351]
 #conference=[24.958202,46.700779]
 #conference=[-11.2027,17.8739]
@@ -36,7 +36,7 @@ def price(loc1,loc2):
         if(distance<=1):
             price = 0
         else:
-            price = (.032 * (distance*2)) + 230
+            price = (.032 * (distance*2 )) + 230
     else:
         price = (.08 * (distance*2)) + 200
     return price
@@ -64,7 +64,7 @@ def flightcost(x):
     if (float(longToTz(longToTzName(x[0],x[1]))) - zonerestriction == 0):
         for i in range (len(latlongarray)):
             tempprice = tempprice + price((latlongarray[i][0],latlongarray[i][1]),(x[0],x[1]))
-        print(tempprice)
+        print(tempprice,(x[0],x[1]))
         return tempprice
     else:
         return 100000000000
@@ -74,7 +74,7 @@ def utcconstraint(x):
 
 locationconstraints = [{'type':'eq','fun':utcconstraint}]
 
-print(sp.brute(flightcost,[(0,62),(25,50)],Ns=186,disp=True))
+print(sp.brute(flightcost,[(0,62),(0,30)],Ns=186,disp=True))
 #print(longToTz(longToTzName(58.9,16.57894737)))
 #print(list(geo_a.findClosestFromPoint((58.64864865,52.32972973))))
 
